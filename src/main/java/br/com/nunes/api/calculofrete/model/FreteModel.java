@@ -24,4 +24,5 @@ public class FreteModel {
     private String cepDestino;
     private double valorTotal;
     private LocalDate dataPrevistaEntrega;
+
 }

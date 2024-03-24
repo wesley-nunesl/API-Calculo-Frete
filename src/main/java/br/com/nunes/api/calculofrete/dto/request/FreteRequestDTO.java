@@ -1,4 +1,4 @@
-package br.com.nunes.api.calculofrete.model.dto.request;
+package br.com.nunes.api.calculofrete.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

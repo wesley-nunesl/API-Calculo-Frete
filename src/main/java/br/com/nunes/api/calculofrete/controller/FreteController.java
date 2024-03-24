@@ -1,8 +1,8 @@
 package br.com.nunes.api.calculofrete.controller;
 
 import br.com.nunes.api.calculofrete.model.FreteModel;
-import br.com.nunes.api.calculofrete.model.dto.request.FreteRequestDTO;
-import br.com.nunes.api.calculofrete.model.dto.response.FreteResponseDTO;
+import br.com.nunes.api.calculofrete.dto.request.FreteRequestDTO;
+import br.com.nunes.api.calculofrete.dto.response.FreteResponseDTO;
 import br.com.nunes.api.calculofrete.repository.FreteRepository;
 import br.com.nunes.api.calculofrete.service.FreteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +32,10 @@ public class FreteController {
     }
 
     @PostMapping("/CalculoFrete")
-    public ResponseEntity<FreteResponseDTO> calcularFrete(@RequestBody FreteRequestDTO requestDTO){
+    public ResponseEntity<FreteResponseDTO> calcularFrete(@RequestBody FreteRequestDTO requestDTO) throws RuntimeException {
         FreteResponseDTO responseDTO = freteService.calcularFrete(requestDTO);
         return ResponseEntity.ok(responseDTO);
+
     }
 
 }

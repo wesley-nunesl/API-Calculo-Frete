@@ -1,9 +1,9 @@
 package br.com.nunes.api.calculofrete.service;
 
+import br.com.nunes.api.calculofrete.dto.request.FreteRequestDTO;
+import br.com.nunes.api.calculofrete.dto.response.FreteResponseDTO;
+import br.com.nunes.api.calculofrete.dto.response.ViaCepResponseDTO;
 import br.com.nunes.api.calculofrete.model.FreteModel;
-import br.com.nunes.api.calculofrete.model.dto.request.FreteRequestDTO;
-import br.com.nunes.api.calculofrete.model.dto.response.FreteResponseDTO;
-import br.com.nunes.api.calculofrete.model.dto.response.ViaCepResponseDTO;
 import br.com.nunes.api.calculofrete.repository.FreteRepository;
 import br.com.nunes.api.calculofrete.service.restTemplate.ViaCepService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +27,7 @@ public class FreteService {
         ViaCepResponseDTO cepOrigem = viaCepService.consultarCep(requestDTO.getCepOrigem());
         ViaCepResponseDTO cepDestino = viaCepService.consultarCep(requestDTO.getCepDestino());
 
-
-        double valorTotalFrete = requestDTO.getPeso() * 1.5;
+        double valorTotalFrete = requestDTO.getPeso();
         LocalDate dataPrevistaEntrega = LocalDate.now();
 
         if (cepOrigem.getDdd().equals(cepDestino.getDdd())) {
@@ -50,7 +49,8 @@ public class FreteService {
 
         freteRepository.save(freteModel);
 
-        return new FreteResponseDTO(cepOrigem.getCep(), cepDestino.getCep(), valorTotalFrete, dataPrevistaEntrega);
+        return new FreteResponseDTO(cepOrigem.toString(), cepDestino.toString(), valorTotalFrete, dataPrevistaEntrega);
+
     }
 
 
