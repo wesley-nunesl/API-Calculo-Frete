@@ -1,4 +1,4 @@
-### API de Cálculo de Frete
+## API de Cálculo de Frete
 
 Esta API foi tem como objetivo calcular o preço do frete e a data prevista de entrega com base em diversas variáveis, como peso da carga, CEP de origem e destino, entre outras.
 
