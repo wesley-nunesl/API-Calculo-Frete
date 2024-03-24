@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Entity(name = "Calculo-Frete")
 public class FreteModel {
 
     @Id
@@ -22,6 +22,6 @@ public class FreteModel {
     private double peso;
     private String cepOrigem;
     private String cepDestino;
-    //private double valorTotal;
-    //private LocalDate dataPrevistaEntrega;
+    private double valorTotal;
+    private LocalDate dataPrevistaEntrega;
 }
