@@ -1,5 +1,6 @@
 package br.com.nunes.api.calculofrete.model;
 
+import br.com.nunes.api.calculofrete.dto.response.FreteResponseDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,5 +25,17 @@ public class FreteModel {
     private String cepDestino;
     private double valorTotal;
     private LocalDate dataPrevistaEntrega;
+
+    public FreteResponseDTO convertToDto(){
+        FreteResponseDTO freteResponseDTO = new FreteResponseDTO();
+        freteResponseDTO.setId(this.id);
+        freteResponseDTO.setPeso(this.peso);
+        freteResponseDTO.setCepOrigem(this.cepOrigem);
+        freteResponseDTO.setCepDestino(this.cepDestino);
+        freteResponseDTO.setValorTotal("R$ " + this.valorTotal);
+        freteResponseDTO.setDataPrevista(this.dataPrevistaEntrega);
+
+        return freteResponseDTO;
+    }
 
 }

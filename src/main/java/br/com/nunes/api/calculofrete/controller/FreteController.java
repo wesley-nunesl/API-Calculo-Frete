@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -22,8 +23,13 @@ public class FreteController {
     private FreteService freteService;
 
     @GetMapping("/CalculoFrete")
-    public List<FreteModel> getAllFrete() {
-        return freteService.listaAllFrete();
+    public List<FreteResponseDTO> getAllFrete() {
+        List<FreteModel> listModel = freteService.listaAllFrete();
+        List<FreteResponseDTO> listDTO = new ArrayList<>();
+        listModel.forEach(freteModel -> {
+            listDTO.add(freteModel.convertToDto());
+        });
+        return listDTO;
     }
 
     @GetMapping("/CalculoFrete/{id}")
@@ -33,8 +39,8 @@ public class FreteController {
 
     @PostMapping("/CalculoFrete")
     public ResponseEntity<FreteResponseDTO> calcularFrete(@RequestBody FreteRequestDTO requestDTO) throws RuntimeException {
-        FreteResponseDTO responseDTO = freteService.calcularFrete(requestDTO);
-        return ResponseEntity.ok(responseDTO);
+        FreteModel responseDTO = freteService.calcularFrete(requestDTO);
+        return ResponseEntity.ok(responseDTO.convertToDto());
 
     }
 

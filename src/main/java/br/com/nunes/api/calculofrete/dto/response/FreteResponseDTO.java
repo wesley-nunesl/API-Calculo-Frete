@@ -12,9 +12,24 @@ import java.time.format.DateTimeFormatter;
 @NoArgsConstructor
 public class FreteResponseDTO {
 
+    private Long id;
+    private double peso;
     private String cepOrigem;
     private String cepDestino;
-    private double valorTotal;
+    private String valorTotal;
     private LocalDate dataPrevista;
+
+
+
+//    @Override
+//    public String toString() {
+//
+//        return  "[" +
+//                " cepOrigem: '" + cepOrigem + "'"+
+//                ", cepDestino: '" + cepDestino + "'"+
+//                ", valorTotal: '" + valorTotal + "'"+
+//                ", dataPrevista: '" + dataPrevista + "'"+
+//                " ]";
+//    }
 
 }
