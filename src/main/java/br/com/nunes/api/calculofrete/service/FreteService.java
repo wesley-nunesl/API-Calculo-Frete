@@ -27,31 +27,48 @@ public class FreteService {
     private FreteRepository freteRepository;
 
 
+    //Method responsible for calculating shipping
     public FreteModel calcularFrete(FreteRequestDTO requestDTO) {
-        //Consulta Ceps para obter dados
+        //Inserting requestDTO values for local variables
         ViaCepResponseDTO cepOrigem = viaCepService.consultarCep(requestDTO.getCepOrigem());
         ViaCepResponseDTO cepDestino = viaCepService.consultarCep(requestDTO.getCepDestino());
 
-        double valorTotalFrete = requestDTO.getPeso() * CUSTO_POR_KG;
+        double peso = requestDTO.getPeso();
+        double valorTotalFrete = peso * CUSTO_POR_KG;
         LocalDate dataPrevistaEntrega = LocalDate.now();
 
+        //-------------------------------
+
+        valorTotalFrete = calculateDesconto(cepOrigem, cepDestino, valorTotalFrete);
+        dataPrevistaEntrega = calculateDataPrevistaEntrega(cepOrigem, cepDestino, dataPrevistaEntrega);
+
+        FreteModel freteModel = createFreteModel(requestDTO, cepOrigem, cepDestino, valorTotalFrete, dataPrevistaEntrega);
+        return freteRepository.save(freteModel);
+    }
+
+    //Method for calculating expected delivery date
+    private LocalDate calculateDataPrevistaEntrega(ViaCepResponseDTO cepOrigem, ViaCepResponseDTO cepDestino, LocalDate dataPrevistaEntrega) {
         if (cepOrigem.getDdd().equals(cepDestino.getDdd())) {
-            valorTotalFrete *= DESCONTO_50_PERCENT;
             dataPrevistaEntrega = dataPrevistaEntrega.plusDays(1);
         } else if (cepOrigem.getUf().equals(cepDestino.getUf())) {
-            valorTotalFrete *= DESCONTO_75_PERCENT;
             dataPrevistaEntrega = dataPrevistaEntrega.plusDays(3);
         } else {
             dataPrevistaEntrega = dataPrevistaEntrega.plusDays(10);
         }
-
-        FreteModel freteModel = createFreteModel(requestDTO, cepOrigem, cepDestino, valorTotalFrete, dataPrevistaEntrega);
-
-        return freteRepository.save(freteModel);
-
+        return dataPrevistaEntrega;
     }
 
+    //Method for calculating discount
+    private double calculateDesconto(ViaCepResponseDTO cepOrigem, ViaCepResponseDTO cepDestino, double valorTotalFrete) {
+        if (cepOrigem.getDdd().equals(cepDestino.getDdd())) {
+            valorTotalFrete *= DESCONTO_50_PERCENT;
+        } else if (cepOrigem.getUf().equals(cepDestino.getUf())) {
+            valorTotalFrete *= DESCONTO_75_PERCENT;
+        }
+        return valorTotalFrete;
+    }
 
+    //Method for inserting data into the database
     private FreteModel createFreteModel(FreteRequestDTO requestDTO, ViaCepResponseDTO cepOrigem, ViaCepResponseDTO cepDestino, double valorTotalFrete, LocalDate dataPrevistaEntrega) {
         FreteModel freteModel = new FreteModel();
         freteModel.setCepOrigem(cepOrigem.getCep());
@@ -59,6 +76,8 @@ public class FreteService {
         freteModel.setPeso(requestDTO.getPeso());
         freteModel.setValorTotal(valorTotalFrete);
         freteModel.setDataPrevistaEntrega(dataPrevistaEntrega);
+        freteModel.setNomeDestinatario(requestDTO.getNomeDestinatario());
+        freteModel.setDataConsulta(LocalDate.now());
         return freteModel;
     }
 
