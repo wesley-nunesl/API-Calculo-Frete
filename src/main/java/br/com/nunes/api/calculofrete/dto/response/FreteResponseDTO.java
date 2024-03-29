@@ -18,6 +18,8 @@ public class FreteResponseDTO {
     private String cepDestino;
     private String valorTotal;
     private LocalDate dataPrevista;
+    private String nomeDestinatario;
+    private LocalDate dataConsulta;
 
 
 

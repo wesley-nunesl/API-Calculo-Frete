@@ -12,4 +12,5 @@ public class FreteRequestDTO {
     private double peso;
     private String cepOrigem;
     private String cepDestino;
+    private String nomeDestinatario;
 }

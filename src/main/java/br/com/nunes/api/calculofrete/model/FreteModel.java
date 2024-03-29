@@ -25,6 +25,8 @@ public class FreteModel {
     private String cepDestino;
     private double valorTotal;
     private LocalDate dataPrevistaEntrega;
+    private String nomeDestinatario;
+    private LocalDate dataConsulta;
 
     public FreteResponseDTO convertToDto(){
         FreteResponseDTO freteResponseDTO = new FreteResponseDTO();
@@ -34,6 +36,8 @@ public class FreteModel {
         freteResponseDTO.setCepDestino(this.cepDestino);
         freteResponseDTO.setValorTotal("R$ " + this.valorTotal);
         freteResponseDTO.setDataPrevista(this.dataPrevistaEntrega);
+        freteResponseDTO.setNomeDestinatario(this.nomeDestinatario);
+        freteResponseDTO.setDataConsulta(this.dataConsulta);
 
         return freteResponseDTO;
     }
