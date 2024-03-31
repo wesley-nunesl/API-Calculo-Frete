@@ -91,4 +91,17 @@ public class FreteService {
     }
 
 
+    //Method for update data
+    private void updateDataFrete(FreteModel entity, FreteModel obj) {
+        entity.setId(obj.getId());
+        entity.setCepOrigem(obj.getCepOrigem());
+        entity.setCepDestino(obj.getCepDestino());
+        entity.setPeso(obj.getPeso());
+        entity.setValorTotal(obj.getValorTotal());
+        entity.setDataPrevistaEntrega(obj.getDataPrevistaEntrega());
+        entity.setNomeDestinatario(obj.getNomeDestinatario());
+        entity.setDataConsulta(LocalDate.now());
+    }
+
+
 }
